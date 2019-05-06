@@ -1,1 +1,2 @@
-FIT5171_Assignment3_2019_06
+# FIT5171_2019_61
+Monash Rockets project
