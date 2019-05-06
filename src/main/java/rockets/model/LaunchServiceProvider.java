@@ -34,7 +34,7 @@ public class LaunchServiceProvider extends Entity {
     private Set<Rocket> rockets;
 
     public LaunchServiceProvider() {
-
+        super();
     }
 
     public LaunchServiceProvider(String name, int yearFounded, String country) {
@@ -128,7 +128,6 @@ public class LaunchServiceProvider extends Entity {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(name, yearFounded, country);
     }
 }

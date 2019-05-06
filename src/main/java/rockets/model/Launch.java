@@ -16,11 +16,12 @@ import static org.neo4j.ogm.annotation.Relationship.INCOMING;
 @NodeEntity
 @CompositeIndex(properties = {"launchDate", "launchVehicle", "launchSite", "orbit"}, unique = true)
 public class Launch extends Entity {
+
     public enum LaunchOutcome {
         FAILED, SUCCESSFUL
     }
 
-
+    @Property(name = "launchDate")
     private LocalDate launchDate;
 
     @Relationship(type = "PROVIDES", direction = INCOMING)
@@ -39,11 +40,11 @@ public class Launch extends Entity {
     @Property(name = "function")
     private String function;
 
-    @Property(name = "price")
-    private BigDecimal price;
-
     @Property(name = "launchOutcome")
     private LaunchOutcome launchOutcome;
+
+    @Property(name = "price")
+    private BigDecimal price;
 
     public Launch(LocalDate launchDate, Rocket launchVehicle, String launchSite, String orbit, LaunchOutcome launchOutcome, Set<String> payload) {
         notNull(launchDate);
@@ -145,7 +146,6 @@ public class Launch extends Entity {
         notNull(launchOutcome, "cannot be null");
         this.launchOutcome = launchOutcome;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -153,12 +153,11 @@ public class Launch extends Entity {
         Launch launch = (Launch) o;
         return Objects.equals(launchDate, launch.launchDate) &&
                 Objects.equals(launchVehicle, launch.launchVehicle) &&
-                Objects.equals(launchServiceProvider, launch.launchServiceProvider) &&
                 Objects.equals(orbit, launch.orbit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(launchDate, launchVehicle, launchServiceProvider, orbit);
+        return Objects.hash(launchDate, launchVehicle, orbit);
     }
 }

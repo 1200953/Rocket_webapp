@@ -1,5 +1,7 @@
 package rockets.model;
 
+import org.neo4j.ogm.annotation.NodeEntity;
+
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,6 +9,7 @@ import java.util.regex.Pattern;
 import static org.apache.commons.lang3.Validate.notBlank;
 import static org.apache.commons.lang3.Validate.notNull;
 
+@NodeEntity
 public class User extends Entity {
     private String firstName;
 
@@ -32,6 +35,9 @@ public class User extends Entity {
         this.lastName = lastName;
         this.password = password;
         this.email = email;
+    }
+
+    public User() {
     }
 
     public String getFirstName() {
@@ -112,6 +118,7 @@ public class User extends Entity {
 
         return this.password.equals(password.trim());
     }
+
 
     @Override
     public boolean equals(Object o) {

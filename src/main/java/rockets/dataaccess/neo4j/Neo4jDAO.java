@@ -1,13 +1,17 @@
 package rockets.dataaccess.neo4j;
 
 import com.google.common.collect.Sets;
+import org.neo4j.ogm.config.Configuration;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.cypher.Filters;
+import org.neo4j.ogm.drivers.embedded.driver.EmbeddedDriver;
 import org.neo4j.ogm.session.Session;
+import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.transaction.Transaction;
 import rockets.dataaccess.DAO;
 import rockets.model.*;
 
+import java.io.File;
 import java.util.Collection;
 
 import static org.neo4j.ogm.cypher.ComparisonOperator.EQUALS;
@@ -16,9 +20,27 @@ public class Neo4jDAO implements DAO {
     private static final int DEPTH_ENTITY = 1;
 
     private Session session;
+    private SessionFactory sessionFactory;
 
-    public Neo4jDAO(Session session) {
-        this.session = session;
+    public Neo4jDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+        if (null == session) {
+            session = sessionFactory.openSession();
+        }
+    }
+
+    public Neo4jDAO(String dbAddress) {
+        File file = new File(dbAddress);
+        Configuration configuration = new Configuration.Builder()
+                //.uri(neoServer.boltURI().toString()) // For Bolt
+                //.uri(neoServer.httpURI().toString()) // For HTTP
+                .uri(file.toURI().toString()) // For Embedded
+                .build();
+        EmbeddedDriver driver = new EmbeddedDriver();
+        driver.configure(configuration);
+
+        sessionFactory = new SessionFactory(driver, User.class.getPackage().getName());
+        session = sessionFactory.openSession();
     }
 
     @Override
@@ -35,9 +57,25 @@ public class Neo4jDAO implements DAO {
             entity.setId(existingEntity.getId());
         }
         Transaction tx = session.beginTransaction();
+        saveOutgoingEntities(entity, clazz);
         session.save(entity);
         tx.commit();
         return entity;
+    }
+
+    // Makes sure we save associated entities correctly (only once)
+    private <T extends Entity> void saveOutgoingEntities(T entity, Class clazz) {
+        if (clazz.equals(Rocket.class)) {
+            Rocket rocket = (Rocket) entity;
+            for (Launch launch : rocket.getLaunches()) {
+                createOrUpdate(launch);
+            }
+        } else if (clazz.equals(LaunchServiceProvider.class)) {
+            LaunchServiceProvider lsp = (LaunchServiceProvider) entity;
+            for (Rocket rocket : lsp.getRockets()) {
+                createOrUpdate(rocket);
+            }
+        }
     }
 
     private <T extends Entity> T findExistingEntity(Entity entity, Class clazz) {
@@ -81,5 +119,21 @@ public class Neo4jDAO implements DAO {
     // TODO: need to be tested!
     public <T extends Entity> void delete(T entity) {
         session.delete(entity);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        Collection<User> users = session.loadAll(User.class, new Filter("email", EQUALS, email));
+
+        if (null == users || users.isEmpty()) {
+            return null;
+        } else {
+            return users.iterator().next();
+        }
+    }
+
+    @Override
+    public void close() {
+        sessionFactory.close();
     }
 }

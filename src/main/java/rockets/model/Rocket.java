@@ -1,16 +1,18 @@
 package rockets.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.neo4j.ogm.annotation.CompositeIndex;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
-import static org.apache.commons.lang3.StringUtils.isNumeric;
-import static org.apache.commons.lang3.Validate.notBlank;
 import static org.apache.commons.lang3.Validate.notNull;
 import static org.neo4j.ogm.annotation.Relationship.INCOMING;
+import static org.neo4j.ogm.annotation.Relationship.OUTGOING;
 
 @NodeEntity
 @CompositeIndex(properties = {"name", "country", "manufacturer"}, unique = true)
@@ -33,17 +35,20 @@ public class Rocket extends Entity {
     @Property(name = "massToOther")
     private String massToOther;
 
-    public Rocket() {
+    @Property(name = "firstYearFlight")
+    private int firstYearFlight;
 
+    @Property(name = "lastYearFlight")
+    private int latestYearFlight;
+
+    @Relationship(type = "PROVIDES", direction = OUTGOING)
+    @JsonIgnore
+    private Set<Launch> launches;
+
+    public Rocket() {
+        super();
     }
 
-    /**
-     * All parameters shouldn't be null.
-     *
-     * @param name
-     * @param country
-     * @param manufacturer
-     */
     public Rocket(String name, String country, LaunchServiceProvider manufacturer) {
         notNull(name);
         notNull(country);
@@ -52,6 +57,8 @@ public class Rocket extends Entity {
         this.name = name;
         this.country = country;
         this.manufacturer = manufacturer;
+
+        this.launches = new LinkedHashSet<>();
     }
 
     public String getName() {
@@ -78,45 +85,41 @@ public class Rocket extends Entity {
         return massToOther;
     }
 
-    public void setName(String name) {
-        notBlank(name, "name should not be null or empty");
-        this.name = name;
+    public int getFirstYearFlight() {
+        return firstYearFlight;
     }
 
-    public void setCountry(String country) {
-        notBlank(country, "country should not be null or empty");
-        this.country = country;
+    public int getLatestYearFlight() {
+        return latestYearFlight;
     }
-
-    public void setManufacturer(LaunchServiceProvider manufacturer) {
-        notNull(manufacturer, "manufacturer should not be null or empty");
-        this.manufacturer = manufacturer;
-    }
-
 
     public void setMassToLEO(String massToLEO) {
-        if (massToLEO == null) {
-            throw new NullPointerException("input cannot be null");
-        }
-        if (!isNumeric(massToLEO) || Integer.parseInt(massToLEO) < 0) {
-            throw new IllegalArgumentException("input is not valid, non-negative numbers required");
-        }
-
+        notNull(massToLEO);
         this.massToLEO = massToLEO;
     }
 
     public void setMassToGTO(String massToGTO) {
-        if (!isNumeric(massToGTO) || Integer.parseInt(massToGTO) < 0) {
-            throw new IllegalArgumentException("input is not valid, non-negative numbers required");
-        }
         this.massToGTO = massToGTO;
     }
 
     public void setMassToOther(String massToOther) {
-        if (!isNumeric(massToOther) || Integer.parseInt(massToOther) < 0) {
-            throw new IllegalArgumentException("input is not valid, non-negative numbers required");
-        }
         this.massToOther = massToOther;
+    }
+
+    public void setFirstYearFlight(int firstYearFlight) {
+        this.firstYearFlight = firstYearFlight;
+    }
+
+    public void setLatestYearFlight(int latestYearFlight) {
+        this.latestYearFlight = latestYearFlight;
+    }
+
+    public Set<Launch> getLaunches() {
+        return launches;
+    }
+
+    public void setLaunches(Set<Launch> launches) {
+        this.launches = launches;
     }
 
     @Override
@@ -143,6 +146,8 @@ public class Rocket extends Entity {
                 ", massToLEO='" + massToLEO + '\'' +
                 ", massToGTO='" + massToGTO + '\'' +
                 ", massToOther='" + massToOther + '\'' +
+                ", firstYearFlight=" + firstYearFlight +
+                ", latestYearFlight=" + latestYearFlight +
                 '}';
     }
 }
