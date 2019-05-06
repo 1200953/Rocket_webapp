@@ -1,11 +1,15 @@
+<!--This project is created based on the code base from Group61's work-->
+<!--Team 6 does not contains the copyright of the original code base-->
+
+
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>space</groupId>
-    <artifactId>fit5171_2019_61</artifactId>
+    <groupId>06</groupId>
+    <artifactId>fit5171_2019_06</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
