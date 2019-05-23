@@ -10,6 +10,8 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import static org.apache.commons.lang3.StringUtils.isNumeric;
+import static org.apache.commons.lang3.Validate.notBlank;
 import static org.apache.commons.lang3.Validate.notNull;
 import static org.neo4j.ogm.annotation.Relationship.INCOMING;
 import static org.neo4j.ogm.annotation.Relationship.OUTGOING;
@@ -41,6 +43,30 @@ public class Rocket extends Entity {
     @Property(name = "lastYearFlight")
     private int latestYearFlight;
 
+    public int getFirstYearFlight() {
+        return firstYearFlight;
+    }
+
+    public void setFirstYearFlight(int firstYearFlight) {
+        this.firstYearFlight = firstYearFlight;
+    }
+
+    public int getLatestYearFlight() {
+        return latestYearFlight;
+    }
+
+    public void setLatestYearFlight(int latestYearFlight) {
+        this.latestYearFlight = latestYearFlight;
+    }
+
+    public Set<Launch> getLaunches() {
+        return launches;
+    }
+
+    public void setLaunches(Set<Launch> launches) {
+        this.launches = launches;
+    }
+
     @Relationship(type = "PROVIDES", direction = OUTGOING)
     @JsonIgnore
     private Set<Launch> launches;
@@ -57,7 +83,6 @@ public class Rocket extends Entity {
         this.name = name;
         this.country = country;
         this.manufacturer = manufacturer;
-
         this.launches = new LinkedHashSet<>();
     }
 
@@ -85,41 +110,45 @@ public class Rocket extends Entity {
         return massToOther;
     }
 
-    public int getFirstYearFlight() {
-        return firstYearFlight;
+    public void setName(String name) {
+        notBlank(name, "name should not be null or empty");
+        this.name = name;
     }
 
-    public int getLatestYearFlight() {
-        return latestYearFlight;
+    public void setCountry(String country) {
+        notBlank(country, "country should not be null or empty");
+        this.country = country;
     }
+
+    public void setManufacturer(LaunchServiceProvider manufacturer) {
+        notNull(manufacturer, "manufacturer should not be null or empty");
+        this.manufacturer = manufacturer;
+    }
+
 
     public void setMassToLEO(String massToLEO) {
-        notNull(massToLEO);
+        if (massToLEO == null) {
+            throw new NullPointerException("input cannot be null");
+        }
+        if (!isNumeric(massToLEO) || Integer.parseInt(massToLEO) < 0) {
+            throw new IllegalArgumentException("input is not valid, non-negative numbers required");
+        }
+
         this.massToLEO = massToLEO;
     }
 
     public void setMassToGTO(String massToGTO) {
+        if (!isNumeric(massToGTO) || Integer.parseInt(massToGTO) < 0) {
+            throw new IllegalArgumentException("input is not valid, non-negative numbers required");
+        }
         this.massToGTO = massToGTO;
     }
 
     public void setMassToOther(String massToOther) {
+        if (!isNumeric(massToOther) || Integer.parseInt(massToOther) < 0) {
+            throw new IllegalArgumentException("input is not valid, non-negative numbers required");
+        }
         this.massToOther = massToOther;
-    }
-
-    public void setFirstYearFlight(int firstYearFlight) {
-        this.firstYearFlight = firstYearFlight;
-    }
-
-    public void setLatestYearFlight(int latestYearFlight) {
-        this.latestYearFlight = latestYearFlight;
-    }
-
-    public Set<Launch> getLaunches() {
-        return launches;
-    }
-
-    public void setLaunches(Set<Launch> launches) {
-        this.launches = launches;
     }
 
     @Override
@@ -146,8 +175,6 @@ public class Rocket extends Entity {
                 ", massToLEO='" + massToLEO + '\'' +
                 ", massToGTO='" + massToGTO + '\'' +
                 ", massToOther='" + massToOther + '\'' +
-                ", firstYearFlight=" + firstYearFlight +
-                ", latestYearFlight=" + latestYearFlight +
                 '}';
     }
 }

@@ -48,6 +48,8 @@ public class User extends Entity {
         notBlank(firstName, "first name should not be null or empty");
         if (isNameValid(firstName)) {
             this.firstName = firstName;
+        } else {
+            throw new IllegalArgumentException("lolololololol");
         }
     }
 
@@ -58,6 +60,7 @@ public class User extends Entity {
     public void setLastName(String lastName) {
         notBlank(lastName, "last name should not be null or empty");
         if (isNameValid(lastName)) {
+
             this.lastName = lastName;
         }
     }
@@ -70,6 +73,9 @@ public class User extends Entity {
         notBlank(email, "email cannot be null or empty");
         if (isEmailValid(email))
             this.email = email;
+        else {
+            throw new IllegalArgumentException("lolololololol");
+        }
     }
 
     /**
@@ -100,7 +106,6 @@ public class User extends Entity {
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(password);
         return m.matches();
-
     }
 
     public String getPassword() {
