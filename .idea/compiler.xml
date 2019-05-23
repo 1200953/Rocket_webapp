@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="FIT5171_Assignment3_2019_06" />
         <module name="fit5171_2019_61" />
       </profile>
     </annotationProcessing>
