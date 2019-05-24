@@ -141,6 +141,9 @@ public class App {
             attributes.put("email", email);
             attributes.put("firstName", firstName);
             attributes.put("lastName", lastName);
+            if (dao.getUserByEmail(email) != null)
+                return handleException(res, attributes, new IllegalArgumentException("email is already exist"),
+                        "register.html.ftl");
 
             logger.info("Registering <" + email + ">, " + password);
 

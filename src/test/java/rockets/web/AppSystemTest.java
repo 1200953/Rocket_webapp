@@ -113,35 +113,35 @@ public class AppSystemTest {
     }
 
     //TODO need to validate the E-mail address
-//    @Test
-//    public void shouldNotRecreateUser() {
-//        JWebUnit.beginAt("/");
-//        JWebUnit.gotoPage("register");
-//        JWebUnit.assertTextPresent("User Registration");
-//
-//        JWebUnit.setTextField("email", "abc@example.com");
-//        JWebUnit.setTextField("password", "1234");
-//        JWebUnit.setTextField("firstName", "John");
-//        JWebUnit.setTextField("lastName", "Doe");
-//
-//        JWebUnit.submit();
-//
-//        JWebUnit.assertTextPresent("Welcome back: John Doe!");
-//
-//        JWebUnit.clickLinkWithExactText("Logout");
-//
-//        JWebUnit.gotoPage("register");
-//        JWebUnit.assertTextPresent("User Registration");
-//
-//        JWebUnit.setTextField("email", "abc@example.com");
-//        JWebUnit.setTextField("password", "1234");
-//        JWebUnit.setTextField("firstName", "Jane");
-//        JWebUnit.setTextField("lastName", "Who");
-//
-//        JWebUnit.submit();
-//
-//        JWebUnit.assertTextNotPresent("Welcome back: Jane Who!");
-//    }
+    @Test
+    public void shouldNotRecreateUser() {
+        JWebUnit.beginAt("/");
+        JWebUnit.gotoPage("register");
+        JWebUnit.assertTextPresent("User Registration");
+
+        JWebUnit.setTextField("email", "abc@example.com");
+        JWebUnit.setTextField("password", "1234");
+        JWebUnit.setTextField("firstName", "John");
+        JWebUnit.setTextField("lastName", "Doe");
+
+        JWebUnit.submit();
+
+        JWebUnit.assertTextPresent("Welcome back: John Doe!");
+
+        JWebUnit.clickLinkWithExactText("Logout");
+
+        JWebUnit.gotoPage("register");
+        JWebUnit.assertTextPresent("User Registration");
+
+        JWebUnit.setTextField("email", "abc@example.com");
+        JWebUnit.setTextField("password", "1234");
+        JWebUnit.setTextField("firstName", "Jane");
+        JWebUnit.setTextField("lastName", "Who");
+
+        JWebUnit.submit();
+
+        JWebUnit.assertTextNotPresent("Welcome back: Jane Who!");
+    }
 
     @Test
     public void shouldHaveWelcomeInBasePage() {

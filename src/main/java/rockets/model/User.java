@@ -74,7 +74,7 @@ public class User extends Entity {
         if (isEmailValid(email))
             this.email = email;
         else {
-            throw new IllegalArgumentException("lolololololol");
+            throw new IllegalArgumentException("email is invalid");
         }
     }
 
