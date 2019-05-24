@@ -46,11 +46,11 @@ public class User extends Entity {
 
     public void setFirstName(String firstName) {
         notBlank(firstName, "first name should not be null or empty");
-        if (isNameValid(firstName)) {
+        if (isNameValid(firstName))
             this.firstName = firstName;
-        } else {
-            throw new IllegalArgumentException("lolololololol");
-        }
+        else
+            throw new IllegalArgumentException("first name is invalid");
+
     }
 
     public String getLastName() {
@@ -59,10 +59,11 @@ public class User extends Entity {
 
     public void setLastName(String lastName) {
         notBlank(lastName, "last name should not be null or empty");
-        if (isNameValid(lastName)) {
-
+        if (isNameValid(lastName))
             this.lastName = lastName;
-        }
+        else
+            throw new IllegalArgumentException("last name is invalid");
+
     }
 
     public String getEmail() {
@@ -116,6 +117,8 @@ public class User extends Entity {
         notBlank(password, "password cannot be null or empty");
         if (isPasswordValid(password))
             this.password = password;
+        else
+            throw new IllegalArgumentException("password is invalid");
     }
 
     // match the given password against user's password and return the result
