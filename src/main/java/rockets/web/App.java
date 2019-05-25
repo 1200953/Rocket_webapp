@@ -126,10 +126,6 @@ public class App {
         }, new FreeMarkerEngine());
     }
 
-
-    /**
-     * TODO: a serious bug in this method. Fix it (and test to verify)!
-     */
     private static void handlePostRegister() {
         post("/register", (req, res) -> {
             Map<String, Object> attributes = new HashMap<>();

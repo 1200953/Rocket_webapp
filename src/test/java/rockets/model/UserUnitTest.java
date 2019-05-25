@@ -15,7 +15,7 @@ public class UserUnitTest {
 
     @BeforeEach
     public void setUp() {
-        target = new User("tester", "Abc12345678", "abc@gmail.com");
+        target = new User("first", "last", "Abc12345678", "abc@gmail.com");
     }
 
     @AfterEach
@@ -26,19 +26,21 @@ public class UserUnitTest {
     @DisplayName("should create user successfully when given right parameters to constructor")
     @Test
     public void shouldConstructorUserObject() {
-        String aName = "Last name";
+        String aFirstName = "First";
+        String aLastName = "Last";
         String aPassword = "Password123";
         String aEmail = "email@gmail.com";
-        User testUser = new User(aName, aPassword, aEmail);
+        User testUser = new User(aFirstName, aLastName, aPassword, aEmail);
         assertNotNull(testUser);
     }
 
     @DisplayName("should throw exception when given invalid email to constructor")
     @Test
     public void shouldThrowExceptionWhenInvalidEmailGiven() {
-        String aName = "Last name";
+        String aFirstName = "First";
+        String aLastName = "Last";
         String aPassword = "Password123";
-        assertThrows(IllegalArgumentException.class, () -> new User(aName, aPassword, "abc@"));
+        assertThrows(IllegalArgumentException.class, () -> new User(aFirstName, aLastName, aPassword, "abc@"));
     }
 
     @DisplayName("should throw exception when given invalid last name to constructor")
@@ -46,39 +48,44 @@ public class UserUnitTest {
     public void shouldThrowExceptionWhenInvalidLastNameGiven() {
         String aEmail = "email@gmail.com";
         String aPassword = "Password123";
-        assertThrows(IllegalArgumentException.class, () -> new User(" Last name", aPassword, aEmail));
+        assertThrows(IllegalArgumentException.class, () -> new User("first", " last", aPassword,
+                aEmail));
     }
 
     @DisplayName("should throw exception when given invalid password to constructor")
     @Test
     public void shouldThrowExceptionWhenInvalidPasswordGiven() {
-        String aName = "Last name";
+        String aFirstName = "First";
+        String aLastName = "Last";
         String aEmail = "email@gmail.com";
-        assertThrows(IllegalArgumentException.class, () -> new User(aName, "1234", aEmail));
+        assertThrows(IllegalArgumentException.class, () -> new User(aFirstName, aLastName, "1234", aEmail));
     }
 
     @DisplayName("should throw exception when given null last name to constructor")
     @Test
     public void shouldThrowExceptionWhenNoLastNameGiven() {
+        String aFirstName = "first";
         String aPassword = "Password123";
         String aEmail = "email@gmail.com";
-        assertThrows(NullPointerException.class, () -> new User(null, aPassword, aEmail));
+        assertThrows(NullPointerException.class, () -> new User( aFirstName,null, aPassword, aEmail));
     }
 
     @DisplayName("should throw exception when given null password to constructor")
     @Test
     public void shouldThrowExceptionWhenNoPasswordGiven() {
-        String aName = "Last name";
+        String aFirstName = "First";
+        String aLastName = "Last";
         String aEmail = "email@gmail.com";
-        assertThrows(NullPointerException.class, () -> new User(aName, null, aEmail));
+        assertThrows(NullPointerException.class, () -> new User(aFirstName, aLastName, null, aEmail));
     }
 
     @DisplayName("should throw exception when given null email to constructor")
     @Test
     public void shouldThrowExceptionWhenNoEmailGiven() {
-        String aName = "Last name";
+        String aFirstName = "First";
+        String aLastName = "Last";
         String aPassword = "Password123";
-        assertThrows(NullPointerException.class, () -> new User(aName, aPassword, null));
+        assertThrows(NullPointerException.class, () -> new User(aFirstName, aLastName, aPassword, null));
     }
 
     @DisplayName("should return true when passwords are matched")
@@ -124,7 +131,8 @@ public class UserUnitTest {
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "  "})
     public void shouldThrowExceptionWhenSetPasswordToEmpty(String password) {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> target.setPassword(password));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> target.setPassword(password));
         assertEquals("password cannot be null or empty", exception.getMessage());
     }
 
@@ -133,7 +141,7 @@ public class UserUnitTest {
     public void shouldReturnTrueWhenUsersHaveSameEmail() {
         String email = "abc@example.com";
         target.setEmail(email);
-        User anotherUser = new User("another tester", "Abc123123", "tester@gmail.com");
+        User anotherUser = new User("first", "last", "Abc123123", "tester@gmail.com");
         anotherUser.setEmail(email);
         assertTrue(target.equals(anotherUser));
     }
@@ -142,7 +150,7 @@ public class UserUnitTest {
     @Test
     public void shouldReturnFalseWhenUsersHaveDifferentEmails() {
         target.setEmail("abc@example.com");
-        User anotherUser = new User("another tester", "Abc123123", "tester@gmail.com");
+        User anotherUser = new User("first", "last", "Abc123123", "tester@gmail.com");
         anotherUser.setEmail("def@example.com");
         assertFalse(target.equals(anotherUser));
     }
@@ -195,7 +203,8 @@ public class UserUnitTest {
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "  "})
     public void shouldThrowExceptionWhenSetFirstNameToEmpty(String firstName) {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> target.setFirstName(firstName));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> target.setFirstName(firstName));
         assertEquals("first name should not be null or empty", exception.getMessage());
     }
 
@@ -210,7 +219,8 @@ public class UserUnitTest {
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "  "})
     public void shouldThrowExceptionWhenSetLastNameToEmpty(String lastName) {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> target.setLastName(lastName));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> target.setLastName(lastName));
         assertEquals("last name should not be null or empty", exception.getMessage());
     }
 
