@@ -22,7 +22,6 @@ public class RocketMiner {
 
 
     /**
-     * TODO: to be implemented & tested!
      * Returns the top-k most active rockets, as measured by number of completed launches.
      *
      * @param k the number of rockets to be returned.
@@ -62,8 +61,6 @@ public class RocketMiner {
     }
 
     /**
-     * TODO: to be implemented & tested!
-     * <p>
      * Returns the top-k most reliable launch service providers as measured
      * by percentage of successful launches.
      *
@@ -125,7 +122,6 @@ public class RocketMiner {
     }
 
     /**
-     * <p>
      * Returns the top-k most recent launches.
      *
      * @param k the number of launches to be returned.
@@ -139,7 +135,6 @@ public class RocketMiner {
     }
 
     /**
-     * TODO: to be implemented & tested!
      * <p>
      * Returns the dominant country who has the most launched rockets in an orbit.
      *
@@ -174,8 +169,6 @@ public class RocketMiner {
     }
 
     /**
-     * TODO: to be implemented & tested!
-     * <p>
      * Returns the top-k most expensive launches.
      *
      * @param k the number of launches to be returned.
@@ -205,8 +198,6 @@ public class RocketMiner {
     }
 
     /**
-     * TODO: to be implemented & tested!
-     * <p>
      * Returns a list of launch service provider that has the top-k highest
      * sales revenue in a year.
      *

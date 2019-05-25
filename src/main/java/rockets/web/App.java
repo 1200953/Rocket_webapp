@@ -94,7 +94,7 @@ public class App {
 
     private static void handleGetUsers() {
         get("/users", (req, res) -> {
-            Map<String, Object> attributes = new HashMap<String, Object>();
+            Map<String, Object> attributes = new HashMap<>();
             try {
                 attributes.put("users", dao.loadAll(User.class));
                 return new ModelAndView(attributes, "users.html.ftl");
@@ -232,7 +232,8 @@ public class App {
         });
     }
 
-    private static ModelAndView handleException(Response res, Map<String, Object> attributes, Exception e, String templateName) {
+    private static ModelAndView handleException(Response res, Map<String, Object> attributes, Exception e,
+                                                String templateName) {
         res.status(500);
         if (e instanceof SQLException && null != e.getCause()) {
             attributes.put("errorMsg", e.getCause().getMessage());

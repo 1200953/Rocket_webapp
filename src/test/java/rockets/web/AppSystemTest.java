@@ -1,6 +1,7 @@
 package rockets.web;
 
 import com.google.common.collect.Lists;
+import net.sourceforge.jwebunit.exception.TestingEngineResponseException;
 import net.sourceforge.jwebunit.junit.JWebUnit;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterAll;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.apache.logging.log4j.core.util.Closer.closeSilently;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.spy;
 
 public class AppSystemTest {
@@ -122,7 +124,7 @@ public class AppSystemTest {
         JWebUnit.assertTextPresent("User Registration");
 
         JWebUnit.setTextField("email", "abc@example.com");
-        JWebUnit.setTextField("password", "1234");
+        JWebUnit.setTextField("password", "qweasd123");
         JWebUnit.setTextField("firstName", "John");
         JWebUnit.setTextField("lastName", "Doe");
 
@@ -136,11 +138,11 @@ public class AppSystemTest {
         JWebUnit.assertTextPresent("User Registration");
 
         JWebUnit.setTextField("email", "abc@example.com");
-        JWebUnit.setTextField("password", "1234");
+        JWebUnit.setTextField("password", "qweasd123");
         JWebUnit.setTextField("firstName", "Jane");
         JWebUnit.setTextField("lastName", "Who");
 
-        JWebUnit.submit();
+        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
 
         JWebUnit.assertTextNotPresent("Welcome back: Jane Who!");
     }
@@ -153,11 +155,11 @@ public class AppSystemTest {
         JWebUnit.assertTextPresent("User Registration");
 
         JWebUnit.setTextField("email", email);
-        JWebUnit.setTextField("password", "1234");
+        JWebUnit.setTextField("password", "qweasd123");
         JWebUnit.setTextField("firstName", "John");
         JWebUnit.setTextField("lastName", "Doe");
 
-        JWebUnit.submit();
+        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
 
         JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
     }
@@ -170,11 +172,11 @@ public class AppSystemTest {
         JWebUnit.assertTextPresent("User Registration");
 
         JWebUnit.setTextField("email", email);
-        JWebUnit.setTextField("password", "1234");
+        JWebUnit.setTextField("password", "qweasd123");
         JWebUnit.setTextField("firstName", "John");
         JWebUnit.setTextField("lastName", "Doe");
 
-        JWebUnit.submit();
+        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
 
         JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
     }
@@ -192,7 +194,7 @@ public class AppSystemTest {
         JWebUnit.setTextField("firstName", "John");
         JWebUnit.setTextField("lastName", "Doe");
 
-        JWebUnit.submit();
+        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
 
         JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
     }
@@ -209,7 +211,7 @@ public class AppSystemTest {
         JWebUnit.setTextField("firstName", "John");
         JWebUnit.setTextField("lastName", "Doe");
 
-        JWebUnit.submit();
+        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
 
         JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
     }
@@ -223,11 +225,11 @@ public class AppSystemTest {
         JWebUnit.assertTextPresent("User Registration");
 
         JWebUnit.setTextField("email", "abc@example.com");
-        JWebUnit.setTextField("password", "1234");
+        JWebUnit.setTextField("password", "qweasd123");
         JWebUnit.setTextField("firstName", firstName);
         JWebUnit.setTextField("lastName", "Doe");
 
-        JWebUnit.submit();
+        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
 
         JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
     }
@@ -240,11 +242,11 @@ public class AppSystemTest {
         JWebUnit.assertTextPresent("User Registration");
 
         JWebUnit.setTextField("email", "abc@example.com");
-        JWebUnit.setTextField("password", "1234");
+        JWebUnit.setTextField("password", "qweasd123");
         JWebUnit.setTextField("firstName", firstName);
         JWebUnit.setTextField("lastName", "Doe");
 
-        JWebUnit.submit();
+        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
 
         JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
     }
@@ -258,11 +260,11 @@ public class AppSystemTest {
         JWebUnit.assertTextPresent("User Registration");
 
         JWebUnit.setTextField("email", "abc@example.com");
-        JWebUnit.setTextField("password", "1234");
+        JWebUnit.setTextField("password", "qweasd123");
         JWebUnit.setTextField("firstName", "John");
         JWebUnit.setTextField("lastName", lastName);
 
-        JWebUnit.submit();
+        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
 
         JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
     }
@@ -275,11 +277,11 @@ public class AppSystemTest {
         JWebUnit.assertTextPresent("User Registration");
 
         JWebUnit.setTextField("email", "abc@example.com");
-        JWebUnit.setTextField("password", "1234");
+        JWebUnit.setTextField("password", "qweasd123");
         JWebUnit.setTextField("firstName", "John");
         JWebUnit.setTextField("lastName", lastName);
 
-        JWebUnit.submit();
+        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
 
         JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
     }
