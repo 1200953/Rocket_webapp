@@ -37,7 +37,8 @@ public class LaunchUnitTest {
 
     @Test
     public void launchServiceProviderCanNotBeSetToNull() {
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> newLaunch.setLaunchServiceProvider(null));
+        NullPointerException exception = assertThrows(NullPointerException.class,
+                () -> newLaunch.setLaunchServiceProvider(null));
         assertEquals("cannot be null", exception.getMessage());
     }
 
@@ -87,7 +88,8 @@ public class LaunchUnitTest {
 
     @Test
     public void launchOutcomeCanNotBeSetToNull() {
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> newLaunch.setLaunchOutcome(null));
+        NullPointerException exception = assertThrows(NullPointerException.class,
+                () -> newLaunch.setLaunchOutcome(null));
         assertEquals("cannot be null", exception.getMessage());
     }
 

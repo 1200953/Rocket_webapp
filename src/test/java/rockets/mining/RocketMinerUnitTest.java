@@ -66,10 +66,12 @@ public class RocketMinerUnitTest {
 
         // add price
         BigDecimal[] price = new BigDecimal[]{BigDecimal.valueOf(10000), BigDecimal.valueOf(20000),
-                BigDecimal.valueOf(30000), BigDecimal.valueOf(40000), BigDecimal.valueOf(50000), BigDecimal.valueOf(60000),
-                BigDecimal.valueOf(70000), BigDecimal.valueOf(80000), BigDecimal.valueOf(90000), BigDecimal.valueOf(100000)};
+                BigDecimal.valueOf(30000), BigDecimal.valueOf(40000), BigDecimal.valueOf(50000),
+                BigDecimal.valueOf(60000), BigDecimal.valueOf(70000), BigDecimal.valueOf(80000),
+                BigDecimal.valueOf(90000), BigDecimal.valueOf(100000)};
 
-        String arr[] = {"100000", "200000", "300000", "400000", "500000", "600000", "700000", "800000", "900000", "1000000"};
+        String arr[] = {"100000", "200000", "300000", "400000", "500000", "600000", "700000", "800000", "900000",
+                "1000000"};
         Set<String> payload = new HashSet<>(Arrays.asList(arr));
 
 
@@ -165,7 +167,8 @@ public class RocketMinerUnitTest {
         }
 
         List<Map.Entry<LaunchServiceProvider, Integer>> list = new ArrayList<>(finishMap.entrySet());
-        Comparator<Map.Entry<LaunchServiceProvider, Integer>> compare = Comparator.comparing(Map.Entry<LaunchServiceProvider, Integer>::getValue);
+        Comparator<Map.Entry<LaunchServiceProvider, Integer>> compare =
+                Comparator.comparing(Map.Entry<LaunchServiceProvider, Integer>::getValue);
         Collections.sort(list, compare.reversed());
 
         int count = 0;
@@ -233,7 +236,8 @@ public class RocketMinerUnitTest {
             priceMap.put(entry.getKey(), (count == null) ? entry.getValue() : count.add(entry.getValue()));
         }
         List<Map.Entry<LaunchServiceProvider, BigDecimal>> list = new ArrayList<>(priceMap.entrySet());
-        Comparator<Map.Entry<LaunchServiceProvider, BigDecimal>> compare = Comparator.comparing(Map.Entry<LaunchServiceProvider, BigDecimal>::getValue);
+        Comparator<Map.Entry<LaunchServiceProvider, BigDecimal>> compare =
+                Comparator.comparing(Map.Entry<LaunchServiceProvider, BigDecimal>::getValue);
         Collections.sort(list, compare.reversed());
         int count = 0;
         List<LaunchServiceProvider> launchServiceProviders = new ArrayList<>();
@@ -267,7 +271,8 @@ public class RocketMinerUnitTest {
             priceMap.put(entry.getKey(), (count == null) ? entry.getValue() : count.add(entry.getValue()));
         }
         List<Map.Entry<LaunchServiceProvider, BigDecimal>> list = new ArrayList<>(priceMap.entrySet());
-        Comparator<Map.Entry<LaunchServiceProvider, BigDecimal>> compare = Comparator.comparing(Map.Entry<LaunchServiceProvider, BigDecimal>::getValue);
+        Comparator<Map.Entry<LaunchServiceProvider, BigDecimal>> compare =
+                Comparator.comparing(Map.Entry<LaunchServiceProvider, BigDecimal>::getValue);
         Collections.sort(list, compare.reversed());
         int count = 0;
         List<LaunchServiceProvider> launchServiceProviders = new ArrayList<>();
