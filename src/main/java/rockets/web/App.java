@@ -139,6 +139,7 @@ public class App {
             String lastName = req.queryParams("lastName");
 
             attributes.put("email", email);
+            attributes.put("password", password);
             attributes.put("firstName", firstName);
             attributes.put("lastName", lastName);
             if (dao.getUserByEmail(email) != null)
