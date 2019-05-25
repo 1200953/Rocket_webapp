@@ -150,11 +150,7 @@ public class App {
 
             User user;
             try {
-                user = new User();
-                user.setEmail(email);
-                user.setPassword(password);
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
+                user = new User(firstName, lastName, password, email);
                 dao.createOrUpdate(user);
 
                 res.status(301);

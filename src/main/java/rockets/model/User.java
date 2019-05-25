@@ -19,7 +19,8 @@ public class User extends Entity {
 
     private String password;
 
-    public User(String lastName, String password, String email) {
+    public User(String firstName, String lastName, String password, String email) {
+        notNull(firstName);
         notNull(lastName);
         notNull(password);
         notNull(email);
@@ -32,12 +33,13 @@ public class User extends Entity {
         if (!isNameValid(lastName)) {
             throw new IllegalArgumentException("last name is not valid.");
         }
+        if (!isNameValid(firstName)) {
+            throw new IllegalArgumentException("first name is not valid.");
+        }
+        this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.email = email;
-    }
-
-    public User() {
     }
 
     public String getFirstName() {
