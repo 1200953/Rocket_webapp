@@ -280,7 +280,6 @@ public class App {
     private static void handleGetCreateRocket() {
     }
 
-
     private static void handleGetRockets() {
         get("/rockets", (req, res) -> {
             Map<String, Object> attributes = new HashMap<>();

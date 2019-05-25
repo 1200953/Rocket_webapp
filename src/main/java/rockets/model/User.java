@@ -19,6 +19,9 @@ public class User extends Entity {
 
     private String password;
 
+    public User() {
+    }
+
     public User(String firstName, String lastName, String password, String email) {
         notNull(firstName);
         notNull(lastName);

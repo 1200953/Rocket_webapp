@@ -43,30 +43,6 @@ public class Rocket extends Entity {
     @Property(name = "lastYearFlight")
     private int latestYearFlight;
 
-    public int getFirstYearFlight() {
-        return firstYearFlight;
-    }
-
-    public void setFirstYearFlight(int firstYearFlight) {
-        this.firstYearFlight = firstYearFlight;
-    }
-
-    public int getLatestYearFlight() {
-        return latestYearFlight;
-    }
-
-    public void setLatestYearFlight(int latestYearFlight) {
-        this.latestYearFlight = latestYearFlight;
-    }
-
-    public Set<Launch> getLaunches() {
-        return launches;
-    }
-
-    public void setLaunches(Set<Launch> launches) {
-        this.launches = launches;
-    }
-
     @Relationship(type = "PROVIDES", direction = OUTGOING)
     @JsonIgnore
     private Set<Launch> launches;
@@ -149,6 +125,30 @@ public class Rocket extends Entity {
             throw new IllegalArgumentException("input is not valid, non-negative numbers required");
         }
         this.massToOther = massToOther;
+    }
+
+    public int getFirstYearFlight() {
+        return firstYearFlight;
+    }
+
+    public void setFirstYearFlight(int firstYearFlight) {
+        this.firstYearFlight = firstYearFlight;
+    }
+
+    public int getLatestYearFlight() {
+        return latestYearFlight;
+    }
+
+    public void setLatestYearFlight(int latestYearFlight) {
+        this.latestYearFlight = latestYearFlight;
+    }
+
+    public Set<Launch> getLaunches() {
+        return launches;
+    }
+
+    public void setLaunches(Set<Launch> launches) {
+        this.launches = launches;
     }
 
     @Override
