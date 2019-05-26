@@ -1,5 +1,6 @@
 package rockets.model;
 
+import com.google.common.collect.Sets;
 import org.neo4j.ogm.annotation.CompositeIndex;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
@@ -46,24 +47,24 @@ public class Launch extends Entity {
     @Property(name = "price")
     private BigDecimal price;
 
-    public Launch(LocalDate launchDate, Rocket launchVehicle, String launchSite, String orbit, LaunchOutcome launchOutcome, Set<String> payload) {
+    public Launch(LocalDate launchDate, Rocket launchVehicle, String launchSite, String orbit,
+                  LaunchOutcome launchOutcome) {
         notNull(launchDate);
         notNull(launchVehicle);
         notNull(launchSite);
         notNull(orbit);
         notNull(launchOutcome);
-        notNull(payload);
 
         this.launchDate = launchDate;
         this.launchVehicle = launchVehicle;
         this.launchSite = launchSite;
         this.orbit = orbit;
         this.launchOutcome = launchOutcome;
-        this.payload = payload;
+        this.payload = Sets.newLinkedHashSet();
     }
 
     public Launch() {
-
+        this.payload = Sets.newLinkedHashSet();
     }
 
     public LocalDate getLaunchDate() {

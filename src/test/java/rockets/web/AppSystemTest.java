@@ -8,8 +8,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import rockets.dataaccess.DAO;
 import rockets.dataaccess.neo4j.Neo4jDAO;
 import rockets.model.Launch;
@@ -116,7 +114,22 @@ public class AppSystemTest {
         );
     }
 
-    // Email
+    @Test
+    public void shouldGoToRegisterPageByClickRegister() {
+        JWebUnit.beginAt("/");
+        JWebUnit.clickLinkWithExactText("register");
+        JWebUnit.assertTextPresent("User Registration");
+    }
+
+    @Test
+    public void shouldBackToHomePageWhenClickCancel() {
+        JWebUnit.beginAt("/");
+        JWebUnit.gotoPage("register");
+        JWebUnit.assertTextPresent("User Registration");
+        JWebUnit.clickLinkWithExactText("Cancel");
+        JWebUnit.assertTextPresent("Welcome to Rockets!");
+    }
+
     @Test
     public void shouldNotRecreateUser() {
         JWebUnit.beginAt("/");
@@ -147,144 +160,145 @@ public class AppSystemTest {
         JWebUnit.assertTextNotPresent("Welcome back: Jane Who!");
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"123", "asd@", "@.com"})
-    public void shouldFailedRegistrationWhenPassInvalidEmail(String email) {
-        JWebUnit.beginAt("/");
-        JWebUnit.gotoPage("register");
-        JWebUnit.assertTextPresent("User Registration");
 
-        JWebUnit.setTextField("email", email);
-        JWebUnit.setTextField("password", "qweasd123");
-        JWebUnit.setTextField("firstName", "John");
-        JWebUnit.setTextField("lastName", "Doe");
-
-        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
-
-        JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"", " ", "  "})
-    public void shouldFailedRegistrationWhenPassEmptyEmail(String email) {
-        JWebUnit.beginAt("/");
-        JWebUnit.gotoPage("register");
-        JWebUnit.assertTextPresent("User Registration");
-
-        JWebUnit.setTextField("email", email);
-        JWebUnit.setTextField("password", "qweasd123");
-        JWebUnit.setTextField("firstName", "John");
-        JWebUnit.setTextField("lastName", "Doe");
-
-        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
-
-        JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
-    }
-
-    // Password
-    @ParameterizedTest
-    @ValueSource(strings = {"1", "ad", "asdqweasdqweasdqeasdqweasdq easd"})
-    public void shouldFailedRegistrationWhenPassInvalidPassword(String password) {
-        JWebUnit.beginAt("/");
-        JWebUnit.gotoPage("register");
-        JWebUnit.assertTextPresent("User Registration");
-
-        JWebUnit.setTextField("email", "abc@example.com");
-        JWebUnit.setTextField("password", password);
-        JWebUnit.setTextField("firstName", "John");
-        JWebUnit.setTextField("lastName", "Doe");
-
-        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
-
-        JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"", " ", "  "})
-    public void shouldFailedRegistrationWhenPassEmptyPassword(String password) {
-        JWebUnit.beginAt("/");
-        JWebUnit.gotoPage("register");
-        JWebUnit.assertTextPresent("User Registration");
-
-        JWebUnit.setTextField("email", "abc@example.com");
-        JWebUnit.setTextField("password", password);
-        JWebUnit.setTextField("firstName", "John");
-        JWebUnit.setTextField("lastName", "Doe");
-
-        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
-
-        JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
-    }
-
-    // First name
-    @ParameterizedTest
-    @ValueSource(strings = {" a", "a "})
-    public void shouldFailedRegistrationWhenPassInvalidFirstName(String firstName) {
-        JWebUnit.beginAt("/");
-        JWebUnit.gotoPage("register");
-        JWebUnit.assertTextPresent("User Registration");
-
-        JWebUnit.setTextField("email", "abc@example.com");
-        JWebUnit.setTextField("password", "qweasd123");
-        JWebUnit.setTextField("firstName", firstName);
-        JWebUnit.setTextField("lastName", "Doe");
-
-        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
-
-        JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"", " ", "  "})
-    public void shouldFailedRegistrationWhenPassEmptyFirstName(String firstName) {
-        JWebUnit.beginAt("/");
-        JWebUnit.gotoPage("register");
-        JWebUnit.assertTextPresent("User Registration");
-
-        JWebUnit.setTextField("email", "abc@example.com");
-        JWebUnit.setTextField("password", "qweasd123");
-        JWebUnit.setTextField("firstName", firstName);
-        JWebUnit.setTextField("lastName", "Doe");
-
-        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
-
-        JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
-    }
-
-    // Last name
-    @ParameterizedTest
-    @ValueSource(strings = {" a", "a "})
-    public void shouldFailedRegistrationWhenPassInvalidLastName(String lastName) {
-        JWebUnit.beginAt("/");
-        JWebUnit.gotoPage("register");
-        JWebUnit.assertTextPresent("User Registration");
-
-        JWebUnit.setTextField("email", "abc@example.com");
-        JWebUnit.setTextField("password", "qweasd123");
-        JWebUnit.setTextField("firstName", "John");
-        JWebUnit.setTextField("lastName", lastName);
-
-        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
-
-        JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"", " ", "  "})
-    public void shouldFailedRegistrationWhenPassEmptyLastName(String lastName) {
-        JWebUnit.beginAt("/");
-        JWebUnit.gotoPage("register");
-        JWebUnit.assertTextPresent("User Registration");
-
-        JWebUnit.setTextField("email", "abc@example.com");
-        JWebUnit.setTextField("password", "qweasd123");
-        JWebUnit.setTextField("firstName", "John");
-        JWebUnit.setTextField("lastName", lastName);
-
-        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
-
-        JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
-    }
+//    @ParameterizedTest
+//    @ValueSource(strings = {"123", "asd@", "@.com"})
+//    public void shouldFailedRegistrationWhenPassInvalidEmail(String email) {
+//        JWebUnit.beginAt("/");
+//        JWebUnit.gotoPage("register");
+//        JWebUnit.assertTextPresent("User Registration");
+//
+//        JWebUnit.setTextField("email", email);
+//        JWebUnit.setTextField("password", "qweasd123");
+//        JWebUnit.setTextField("firstName", "John");
+//        JWebUnit.setTextField("lastName", "Doe");
+//
+//        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
+//
+//        JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
+//    }
+//
+//    @ParameterizedTest
+//    @ValueSource(strings = {"", " ", "  "})
+//    public void shouldFailedRegistrationWhenPassEmptyEmail(String email) {
+//        JWebUnit.beginAt("/");
+//        JWebUnit.gotoPage("register");
+//        JWebUnit.assertTextPresent("User Registration");
+//
+//        JWebUnit.setTextField("email", email);
+//        JWebUnit.setTextField("password", "qweasd123");
+//        JWebUnit.setTextField("firstName", "John");
+//        JWebUnit.setTextField("lastName", "Doe");
+//
+//        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
+//
+//        JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
+//    }
+//
+//    // Password
+//    @ParameterizedTest
+//    @ValueSource(strings = {"1", "ad", "asdqweasdqweasdqeasdqweasdq easd"})
+//    public void shouldFailedRegistrationWhenPassInvalidPassword(String password) {
+//        JWebUnit.beginAt("/");
+//        JWebUnit.gotoPage("register");
+//        JWebUnit.assertTextPresent("User Registration");
+//
+//        JWebUnit.setTextField("email", "abc@example.com");
+//        JWebUnit.setTextField("password", password);
+//        JWebUnit.setTextField("firstName", "John");
+//        JWebUnit.setTextField("lastName", "Doe");
+//
+//        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
+//
+//        JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
+//    }
+//
+//    @ParameterizedTest
+//    @ValueSource(strings = {"", " ", "  "})
+//    public void shouldFailedRegistrationWhenPassEmptyPassword(String password) {
+//        JWebUnit.beginAt("/");
+//        JWebUnit.gotoPage("register");
+//        JWebUnit.assertTextPresent("User Registration");
+//
+//        JWebUnit.setTextField("email", "abc@example.com");
+//        JWebUnit.setTextField("password", password);
+//        JWebUnit.setTextField("firstName", "John");
+//        JWebUnit.setTextField("lastName", "Doe");
+//
+//        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
+//
+//        JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
+//    }
+//
+//    // First name
+//    @ParameterizedTest
+//    @ValueSource(strings = {" a", "a "})
+//    public void shouldFailedRegistrationWhenPassInvalidFirstName(String firstName) {
+//        JWebUnit.beginAt("/");
+//        JWebUnit.gotoPage("register");
+//        JWebUnit.assertTextPresent("User Registration");
+//
+//        JWebUnit.setTextField("email", "abc@example.com");
+//        JWebUnit.setTextField("password", "qweasd123");
+//        JWebUnit.setTextField("firstName", firstName);
+//        JWebUnit.setTextField("lastName", "Doe");
+//
+//        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
+//
+//        JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
+//    }
+//
+//    @ParameterizedTest
+//    @ValueSource(strings = {"", " ", "  "})
+//    public void shouldFailedRegistrationWhenPassEmptyFirstName(String firstName) {
+//        JWebUnit.beginAt("/");
+//        JWebUnit.gotoPage("register");
+//        JWebUnit.assertTextPresent("User Registration");
+//
+//        JWebUnit.setTextField("email", "abc@example.com");
+//        JWebUnit.setTextField("password", "qweasd123");
+//        JWebUnit.setTextField("firstName", firstName);
+//        JWebUnit.setTextField("lastName", "Doe");
+//
+//        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
+//
+//        JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
+//    }
+//
+//    // Last name
+//    @ParameterizedTest
+//    @ValueSource(strings = {" a", "a "})
+//    public void shouldFailedRegistrationWhenPassInvalidLastName(String lastName) {
+//        JWebUnit.beginAt("/");
+//        JWebUnit.gotoPage("register");
+//        JWebUnit.assertTextPresent("User Registration");
+//
+//        JWebUnit.setTextField("email", "abc@example.com");
+//        JWebUnit.setTextField("password", "qweasd123");
+//        JWebUnit.setTextField("firstName", "John");
+//        JWebUnit.setTextField("lastName", lastName);
+//
+//        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
+//
+//        JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
+//    }
+//
+//    @ParameterizedTest
+//    @ValueSource(strings = {"", " ", "  "})
+//    public void shouldFailedRegistrationWhenPassEmptyLastName(String lastName) {
+//        JWebUnit.beginAt("/");
+//        JWebUnit.gotoPage("register");
+//        JWebUnit.assertTextPresent("User Registration");
+//
+//        JWebUnit.setTextField("email", "abc@example.com");
+//        JWebUnit.setTextField("password", "qweasd123");
+//        JWebUnit.setTextField("firstName", "John");
+//        JWebUnit.setTextField("lastName", lastName);
+//
+//        assertThrows(TestingEngineResponseException.class, JWebUnit::submit);
+//
+//        JWebUnit.assertTextNotPresent("Welcome back: John Doe!");
+//    }
 
     @Test
     public void shouldHaveWelcomeInBasePage() {

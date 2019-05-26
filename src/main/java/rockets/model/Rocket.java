@@ -1,6 +1,7 @@
 package rockets.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Sets;
 import org.neo4j.ogm.annotation.CompositeIndex;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
@@ -48,7 +49,7 @@ public class Rocket extends Entity {
     private Set<Launch> launches;
 
     public Rocket() {
-        super();
+        this.launches = Sets.newLinkedHashSet();
     }
 
     public Rocket(String name, String country, LaunchServiceProvider manufacturer) {

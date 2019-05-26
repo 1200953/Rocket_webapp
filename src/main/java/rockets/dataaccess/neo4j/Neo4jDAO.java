@@ -72,8 +72,9 @@ public class Neo4jDAO implements DAO {
             }
         } else if (clazz.equals(LaunchServiceProvider.class)) {
             LaunchServiceProvider lsp = (LaunchServiceProvider) entity;
-            for (Rocket rocket : lsp.getRockets()) {
-                createOrUpdate(rocket);
+            if (lsp.getRockets().size() > 0) {
+                for (Rocket rocket : lsp.getRockets())
+                    createOrUpdate(rocket);
             }
         }
     }
@@ -128,6 +129,18 @@ public class Neo4jDAO implements DAO {
             return null;
         } else {
             return users.iterator().next();
+        }
+    }
+
+    @Override
+    public LaunchServiceProvider getLSPByName(String name) {
+        Collection<LaunchServiceProvider> lsps = session.loadAll(LaunchServiceProvider.class,
+                new Filter("name", EQUALS, name));
+
+        if (null == lsps || lsps.isEmpty()) {
+            return null;
+        } else {
+            return lsps.iterator().next();
         }
     }
 
