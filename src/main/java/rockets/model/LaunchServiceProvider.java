@@ -34,7 +34,7 @@ public class LaunchServiceProvider extends Entity {
     private Set<Rocket> rockets;
 
     public LaunchServiceProvider() {
-        super();
+        rockets = Sets.newLinkedHashSet();
     }
 
     public LaunchServiceProvider(String name, int yearFounded, String country) {
@@ -90,6 +90,8 @@ public class LaunchServiceProvider extends Entity {
         if (isYear(aYear)) {
             int year = Integer.parseInt(aYear);
             yearFounded = year;
+        } else {
+            throw new IllegalArgumentException("year founded is invalid");
         }
     }
 

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rockets.dataaccess.DAO;
 import rockets.dataaccess.neo4j.Neo4jDAO;
+import rockets.model.LaunchServiceProvider;
 import rockets.model.Rocket;
 import rockets.model.User;
 import spark.ModelAndView;
@@ -71,13 +72,13 @@ public class App {
         // "/users"
         handleGetUsers();
 
-        // "/rocket/:id
+        // "/rocket/:id"
         handleGetRocket();
 
-        // "/rocket/create
+        // "/rocket/create"
         handleGetCreateRocket();
 
-        // "/rocket/create
+        // "/rocket/create"
         handlePostCreateRocket();
 
         // "/rockets"
@@ -85,6 +86,18 @@ public class App {
 
         // "/launches"
 //        handleGetLaunches();
+
+        // "/lsp/create"
+        handleGetCreateLSP();
+
+        // "/lsp/create"
+        handlePostCreateLSP();
+
+        // "/lsp/:id"
+        handleGetLSP();
+
+        // "/lsps"
+        handleGetLSPs();
 
     }
 
@@ -126,10 +139,6 @@ public class App {
         }, new FreeMarkerEngine());
     }
 
-
-    /**
-     * TODO: a serious bug in this method. Fix it (and test to verify)!
-     */
     private static void handlePostRegister() {
         post("/register", (req, res) -> {
             Map<String, Object> attributes = new HashMap<>();
@@ -274,22 +283,74 @@ public class App {
 
     // TODO: Need to TDD this
     private static void handleGetRocket() {
+        get("/rocket/:id", (req, res) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            try {
+                String id = req.params(":id");
+                Rocket rocket = dao.load(Rocket.class, Long.parseLong(id));
+                if (null != rocket) {
+                    attributes.put("rocket", rocket);
+                } else {
+                    attributes.put("errorMsg", "No rocket with the ID " + id + ".");
+                }
+                return new ModelAndView(attributes, "rocket.html.ftl");
+            } catch (Exception e) {
+                return handleException(res, attributes, e, "rocket.html.ftl");
+            }
+        }, new FreeMarkerEngine());
     }
 
     // TODO: Need to TDD this
     private static void handlePostCreateRocket() {
+        post("/rocket/create", (req, res) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            String rocketName = req.queryParams("rocketName");
+            String country = req.queryParams("country");
+            String manufacturer = req.queryParams("manufacturer");
+
+            attributes.put("rocketName", rocketName);
+            attributes.put("country", country);
+            attributes.put("manufacturer", manufacturer);
+
+            logger.info("Creating Rocket <" + rocketName + ">");
+
+            Rocket rocket;
+            try {
+                rocket = new Rocket();
+                rocket.setName(rocketName);
+                rocket.setCountry(country);
+                LaunchServiceProvider lsp = dao.getLSPByName(manufacturer);
+                rocket.setManufacturer(lsp);
+                dao.createOrUpdate(rocket);
+
+                res.status(301);
+                req.session(true);
+                req.session().attribute("rocket", rocket);
+                res.redirect("/register");
+                return new ModelAndView(attributes, "base_page.html.ftl");
+            } catch (Exception e) {
+                return handleException(res, attributes, e, "create_rocket.html.ftl");
+            }
+        }, new FreeMarkerEngine());
     }
 
     // TODO: Need to TDD this
     private static void handleGetCreateRocket() {
-    }
+        get("/rocket/create", (req, res) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("rocketName", "");
+            attributes.put("country", "");
+            attributes.put("manufacturer", "");
 
+            return new ModelAndView(attributes, "create_rocket.html.ftl");
+        }, new FreeMarkerEngine());
+    }
 
     private static void handleGetRockets() {
         get("/rockets", (req, res) -> {
             Map<String, Object> attributes = new HashMap<>();
             try {
-                attributes.put("missions", dao.loadAll(Rocket.class));
+                attributes.put("rockets", dao.loadAll(Rocket.class));
                 return new ModelAndView(attributes, "rockets.html.ftl");
             } catch (Exception e) {
                 return handleException(res, attributes, e, "rockets.html.ftl");
@@ -308,5 +369,79 @@ public class App {
         } finally {
             closeSilently(stream);
         }
+    }
+
+    private static void handlePostCreateLSP() {
+        post("/lsp/create", (req, res) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            String lspName = req.queryParams("lspName");
+            String yearFounded = req.queryParams("yearFounded");
+            String country = req.queryParams("country");
+
+            attributes.put("lspName", lspName);
+            //add password
+            attributes.put("yearFounded", yearFounded);
+            attributes.put("country", country);
+
+            logger.info("Creating LSP <" + lspName + ">");
+
+            LaunchServiceProvider lsp;
+            try {
+                lsp = new LaunchServiceProvider();
+                lsp.setName(lspName);
+                lsp.setYearFounded(yearFounded);
+                lsp.setCountry(country);
+                dao.createOrUpdate(lsp);
+
+                res.status(301);
+                req.session(true);
+                req.session().attribute("lsp", lsp);
+                res.redirect("/lsp/create");
+                return new ModelAndView(attributes, "base_page.html.ftl");
+            } catch (Exception e) {
+                return handleException(res, attributes, e, "create_lsp.html.ftl");
+            }
+        }, new FreeMarkerEngine());
+    }
+
+    private static void handleGetCreateLSP() {
+        get("/lsp/create", (req, res) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("lspName", "");
+            attributes.put("yearFounded", "");
+            attributes.put("country", "");
+
+            return new ModelAndView(attributes, "create_lsp.html.ftl");
+        }, new FreeMarkerEngine());
+    }
+
+    private static void handleGetLSP() {
+        get("/lsp/:id", (req, res) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            try {
+                String id = req.params(":id");
+                LaunchServiceProvider lsp = dao.load(LaunchServiceProvider.class, Long.parseLong(id));
+                if (null != lsp) {
+                    attributes.put("lsp", lsp);
+                } else {
+                    attributes.put("errorMsg", "No launch service provider with the ID " + id + ".");
+                }
+                return new ModelAndView(attributes, "lsp.html.ftl");
+            } catch (Exception e) {
+                return handleException(res, attributes, e, "lsp.html.ftl");
+            }
+        }, new FreeMarkerEngine());
+    }
+
+    private static void handleGetLSPs() {
+        get("/lsps", (req, res) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            try {
+                attributes.put("lsps", dao.loadAll(Rocket.class));
+                return new ModelAndView(attributes, "lsps.html.ftl");
+            } catch (Exception e) {
+                return handleException(res, attributes, e, "lsps.html.ftl");
+            }
+        }, new FreeMarkerEngine());
     }
 }

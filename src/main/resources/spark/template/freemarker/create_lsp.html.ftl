@@ -12,13 +12,13 @@
 
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 
-    <meta name="description" content="Rockets: a rocket information repository - Create Rocket">
+    <meta name="description" content="Rockets: a rocket information repository - Create Launch Service Provider">
 </head>
 
 <body>
 
 <div id="title_pane">
-    <h3>Rocket Creation</h3>
+    <h3>Launch Service Provider Creation</h3>
 </div>
 
 <p>${errorMsg!""}</p>
@@ -26,21 +26,21 @@
 <div>
     <p>* Fields are required.</p>
 </div>
-<form name="create_rocket" action="/rocket/create" method="POST">
+<form name="create_lsp" action="/lsp/create" method="POST">
     <div id="admin_left_pane" class="fieldset_without_border">
-        <div><p>Rocket Details</p></div>
+        <div><p>Mission Details</p></div>
         <ol>
             <li>
-                <label for="rocketName" class="bold">Rocket Name:*</label>
-                <input id="rocketName" name="rocketName" type="text" value="${rocketName!""}">
+                <label for="lspName" class="bold">Launch Service Provider Name:*</label>
+                <input id="lspName" name="lspName" type="text" value="${lspName!""}">
+            </li>
+            <li>
+                <label for="yearFounded" class="bold">Year Founded:*</label>
+                <input id="yearFounded" name="yearFounded" type="text" value="${yearFounded!""}">
             </li>
             <li>
                 <label for="country" class="bold">Country:*</label>
                 <input id="country" name="country" type="text" value="${country!""}">
-            </li>
-            <li>
-                <label for="manufacturer" class="bold">Manufacturer:*</label>
-                <input id="manufacturer" name="manufacturer" type="text" value="${manufacturer!""}">
             </li>
         </ol>
     </div>
@@ -51,7 +51,7 @@
         </div>
     </#if>
     <div id="buttonwrapper">
-        <button type="submit">Create New Rocket</button>
+        <button type="submit">Create New Launch Service Provider</button>
         <a href="/">Cancel</a>
     </div>
 </form>

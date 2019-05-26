@@ -16,7 +16,8 @@ public class RocketUnitTest {
 
     @BeforeEach
     public void setUp() {
-        LaunchServiceProvider manufacturer = new LaunchServiceProvider("Manufacturer A", 2018, "Australia");
+        LaunchServiceProvider manufacturer = new LaunchServiceProvider("Manufacturer A", 2018,
+                "Australia");
         target = new Rocket("Leo", "US", manufacturer);
     }
 
@@ -104,14 +105,6 @@ public class RocketUnitTest {
         assertEquals("manufacturer should not be null or empty", exception.getMessage());
     }
 
-//   @DisplayName("should throw exception when set manufacturer name to empty")
-//   @ParameterizedTest
-//   @ValueSource(strings = {""," ","  "})
-//   public void shouldThrowExceptionWhenSetManufacturerToEmpty(String aName) {
-//       IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> target.setManufacturer(aName));
-//       assertEquals("manufacturer should not be null or empty", exception.getMessage());
-//   }
-
     @DisplayName("should throw exception when set country name to null")
     @Test
     public void shouldThrowExceptionWhenSetCountryToNull() {
@@ -123,7 +116,8 @@ public class RocketUnitTest {
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "  "})
     public void shouldThrowExceptionWhenSeCountryToEmpty(String aName) {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> target.setCountry(aName));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> target.setCountry(aName));
         assertEquals("country should not be null or empty", exception.getMessage());
     }
 
@@ -131,7 +125,8 @@ public class RocketUnitTest {
     @ParameterizedTest
     @ValueSource(strings = {"Ray", "-98", "", " "})
     void shouldThrowExceptionWhenSetMassToLEOToNonPositiveNumber(String mass) {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> target.setMassToLEO(mass));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> target.setMassToLEO(mass));
         assertEquals("input is not valid, non-negative numbers required", exception.getMessage());
     }
 
@@ -139,7 +134,8 @@ public class RocketUnitTest {
     @ParameterizedTest
     @ValueSource(strings = {"Ray", "-98", "", " "})
     void shouldThrowExceptionWhenSetMassToGTOToNonPositiveNumber(String mass) {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> target.setMassToGTO(mass));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> target.setMassToGTO(mass));
         assertEquals("input is not valid, non-negative numbers required", exception.getMessage());
     }
 
@@ -147,14 +143,16 @@ public class RocketUnitTest {
     @ParameterizedTest
     @ValueSource(strings = {"Ray", "-98", "", " "})
     void shouldThrowExceptionWhenSetMassToOtherToNonPositiveNumber(String mass) {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> target.setMassToOther(mass));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> target.setMassToOther(mass));
         assertEquals("input is not valid, non-negative numbers required", exception.getMessage());
     }
 
     @DisplayName("should return false when two rockets have same name")
     @Test
     public void shouldReturnFalseWhenTwoRocketsHaveSameName() {
-        LaunchServiceProvider manufacturerB = new LaunchServiceProvider("Manufacturer B", 2018, "Australia");
+        LaunchServiceProvider manufacturerB = new LaunchServiceProvider("Manufacturer B", 2018,
+                "Australia");
         Rocket AnotherRocket = new Rocket("Leo", "UK", manufacturerB);
         assertFalse(target.equals(AnotherRocket));
     }

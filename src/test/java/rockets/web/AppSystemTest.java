@@ -8,8 +8,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import rockets.dataaccess.DAO;
 import rockets.dataaccess.neo4j.Neo4jDAO;
 import rockets.model.Launch;
@@ -116,8 +114,22 @@ public class AppSystemTest {
         );
     }
 
-    //  E-mail
-    // Should throw exception if register the user with the same email
+    @Test
+    public void shouldGoToRegisterPageByClickRegister() {
+        JWebUnit.beginAt("/");
+        JWebUnit.clickLinkWithExactText("register");
+        JWebUnit.assertTextPresent("User Registration");
+    }
+
+    @Test
+    public void shouldBackToHomePageWhenClickCancel() {
+        JWebUnit.beginAt("/");
+        JWebUnit.gotoPage("register");
+        JWebUnit.assertTextPresent("User Registration");
+        JWebUnit.clickLinkWithExactText("Cancel");
+        JWebUnit.assertTextPresent("Welcome to Rockets!");
+    }
+
     @Test
     public void shouldNotRecreateUser() {
         JWebUnit.beginAt("/");
@@ -148,7 +160,7 @@ public class AppSystemTest {
         JWebUnit.assertTextNotPresent("Welcome back: Jane Who!");
     }
 
-//    //
+
 //    @ParameterizedTest
 //    @ValueSource(strings = {"123", "asd@", "@.com"})
 //    public void shouldFailedRegistrationWhenPassInvalidEmail(String email) {

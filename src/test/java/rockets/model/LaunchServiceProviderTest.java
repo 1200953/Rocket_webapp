@@ -67,7 +67,8 @@ public class LaunchServiceProviderTest {
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "  "})
     public void shouldThrowExceptionWhenSetServiceProviderNameToEmpty(String aName) {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> provider.setName(aName));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> provider.setName(aName));
         assertEquals("name cannot be null or empty", exception.getMessage());
     }
 
@@ -82,7 +83,8 @@ public class LaunchServiceProviderTest {
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "  "})
     public void shouldThrowExceptionWhenSetProviderCountryToEmpty(String aCountryName) {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> provider.setCountry(aCountryName));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> provider.setCountry(aCountryName));
         assertEquals("country name cannot be null or empty", exception.getMessage());
     }
 
@@ -97,7 +99,8 @@ public class LaunchServiceProviderTest {
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "  "})
     public void shouldThrowExceptionWhenSetHeadquartersToEmpty(String aHeadquarters) {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> provider.setHeadquarters(aHeadquarters));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> provider.setHeadquarters(aHeadquarters));
         assertEquals("headquarters cannot be null or empty", exception.getMessage());
     }
 
@@ -119,7 +122,8 @@ public class LaunchServiceProviderTest {
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "  "})
     public void shouldThrowExceptionWhenSetFoundedYearToEmpty(String aYear) {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> provider.setYearFounded(aYear));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> provider.setYearFounded(aYear));
         assertEquals("year cannot be null or empty", exception.getMessage());
     }
 
@@ -168,7 +172,8 @@ public class LaunchServiceProviderTest {
         provider.setCountry(country);
         provider.setYearFounded(year);
 
-        LaunchServiceProvider anotherProvider = new LaunchServiceProvider("Manufacturer b", 2019, "China");
+        LaunchServiceProvider anotherProvider = new LaunchServiceProvider("Manufacturer b", 2019,
+                "China");
         anotherProvider.setName(name);
         anotherProvider.setCountry(country);
         anotherProvider.setYearFounded(year);
@@ -179,7 +184,8 @@ public class LaunchServiceProviderTest {
     @Test
     public void shouldReturnFalseWhenLaunchServiceProviderHaveDifferentFoundedYear() {
         provider.setYearFounded("2019");
-        LaunchServiceProvider anotherProvider = new LaunchServiceProvider("Manufacturer b", 2019, "China");
+        LaunchServiceProvider anotherProvider = new LaunchServiceProvider("Manufacturer b", 2019,
+                "China");
         anotherProvider.setYearFounded("2018");
         assertFalse(provider.equals(anotherProvider));
     }
@@ -188,7 +194,8 @@ public class LaunchServiceProviderTest {
     @Test
     public void shouldReturnFalseWhenLaunchServiceProviderHaveDifferentName() {
         provider.setName("Tester A");
-        LaunchServiceProvider anotherProvider = new LaunchServiceProvider("Manufacturer b", 2019, "China");
+        LaunchServiceProvider anotherProvider = new LaunchServiceProvider("Manufacturer b", 2019,
+                "China");
         anotherProvider.setName("Tester B");
         assertFalse(provider.equals(anotherProvider));
     }
@@ -197,7 +204,8 @@ public class LaunchServiceProviderTest {
     @Test
     public void shouldReturnFalseWhenLaunchServiceProviderHaveDifferentCountry() {
         provider.setCountry("China");
-        LaunchServiceProvider anotherProvider = new LaunchServiceProvider("Manufacturer b", 2019, "China");
+        LaunchServiceProvider anotherProvider = new LaunchServiceProvider("Manufacturer b", 2019,
+                "China");
         anotherProvider.setCountry("Australia");
         assertFalse(provider.equals(anotherProvider));
     }

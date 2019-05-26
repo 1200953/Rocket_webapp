@@ -31,6 +31,7 @@
         </#if>
 		<li>See the list of <a href="/users">users</a> registered with the system.</li>
 		<li>See the list of <a href="/rockets">rockets</a>.</li>
+        <li>See the list of <a href="/lsps">launch service providers</a>.</li>
 	</ul>
 </div>
 
