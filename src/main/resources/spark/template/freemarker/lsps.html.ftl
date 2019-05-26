@@ -19,7 +19,7 @@
 <div>
 <#if errorMsg?? && errorMsg?has_content>
     <li><h4 class="errorMsg">${errorMsg}</h4></li>
-<#elseif lsps?? && rockets?has_content>
+<#elseif lsps?? && lsps?has_content>
     <ul>
         <#list lsps as lsp>
             <li><a href="/lsp/${lsp.id}">${lsp.name}</a></li>

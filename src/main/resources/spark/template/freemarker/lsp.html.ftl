@@ -24,9 +24,8 @@
     <p>Launch Service Provider details:</p>
     <ul>
         <li>Name: ${lsp.name}</li>
-        <li>Year Founded: <a href="lsp/${lsp.yearFounded}">${lsp.yearFounded}</a></li>
+        <li>Year Founded: ${lsp.yearFounded}</li>
         <li>Country: ${lsp.country}</li>
-        <li>Headquarters: ${rocket.headquarters}</li>
     </ul>
 </#if>
 

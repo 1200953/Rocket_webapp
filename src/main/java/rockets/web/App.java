@@ -72,14 +72,14 @@ public class App {
         // "/users"
         handleGetUsers();
 
-        // "/rocket/:id"
-        handleGetRocket();
-
         // "/rocket/create"
         handleGetCreateRocket();
 
         // "/rocket/create"
         handlePostCreateRocket();
+
+        // "/rocket/:id"
+        handleGetRocket();
 
         // "/rockets"
         handleGetRockets();
@@ -391,6 +391,9 @@ public class App {
                 lsp.setName(lspName);
                 lsp.setYearFounded(yearFounded);
                 lsp.setCountry(country);
+                if (dao.getLSPByName(lspName) != null)
+                    throw new IllegalArgumentException("lsp is already exist");
+
                 dao.createOrUpdate(lsp);
 
                 res.status(301);
@@ -437,7 +440,7 @@ public class App {
         get("/lsps", (req, res) -> {
             Map<String, Object> attributes = new HashMap<>();
             try {
-                attributes.put("lsps", dao.loadAll(Rocket.class));
+                attributes.put("lsps", dao.loadAll(LaunchServiceProvider.class));
                 return new ModelAndView(attributes, "lsps.html.ftl");
             } catch (Exception e) {
                 return handleException(res, attributes, e, "lsps.html.ftl");
