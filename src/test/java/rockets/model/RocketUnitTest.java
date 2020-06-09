@@ -35,13 +35,13 @@ public class RocketUnitTest {
         assertNotNull(bfr);
     }
 
-    @DisplayName("should throw exception when given null manufacturer to constructor")
-    @Test
-    public void shouldThrowExceptionWhenNoManufacturerGiven() {
-        String name = "BFR";
-        String country = "USA";
-        assertThrows(NullPointerException.class, () -> new Rocket(name, country, null));
-    }
+//    @DisplayName("should throw exception when given null manufacturer to constructor")
+//    @Test
+//    public void shouldThrowExceptionWhenNoManufacturerGiven() {
+//        String name = "BFR";
+//        String country = "USA";
+//        assertThrows(NullPointerException.class, () -> new Rocket(name, country, null));
+//    }
 
     @DisplayName("should throw exception when given null name to constructor")
     @Test
