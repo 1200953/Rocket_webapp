@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: rockets.web.AppIntegrationTest
+-------------------------------------------------------------------------------
+Tests run: 22, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.578 s - in rockets.web.AppIntegrationTest

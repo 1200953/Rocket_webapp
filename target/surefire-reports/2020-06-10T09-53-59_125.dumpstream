@@ -1,0 +1,18 @@
+# Created at 2020-06-10T09:53:59.809
+Java HotSpot(TM) 64-Bit Server VM warning: Ignoring option MaxPermSize; support was removed in 8.0
+
+# Created at 2020-06-10T09:54:02.652
+WARNING: An illegal reflective access operation has occurred
+
+# Created at 2020-06-10T09:54:02.654
+WARNING: Illegal reflective access by org.neo4j.io.pagecache.impl.SingleFilePageSwapper (file:/C:/Users/53050/.m2/repository/org/neo4j/neo4j-io/3.3.4/neo4j-io-3.3.4.jar) to field sun.nio.ch.FileChannelImpl.positionLock
+
+# Created at 2020-06-10T09:54:02.655
+WARNING: Please consider reporting this to the maintainers of org.neo4j.io.pagecache.impl.SingleFilePageSwapper
+
+# Created at 2020-06-10T09:54:02.656
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+
+# Created at 2020-06-10T09:54:02.657
+WARNING: All illegal access operations will be denied in a future release
+
