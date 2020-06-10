@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: rockets.mining.RocketMinerUnitTest
--------------------------------------------------------------------------------
-Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.346 s - in rockets.mining.RocketMinerUnitTest
