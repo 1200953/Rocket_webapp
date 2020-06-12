@@ -31,7 +31,7 @@ public class RocketMinerUnitTest {
     private List<Rocket> rockets;
     private List<LaunchServiceProvider> lsps;
     private List<Launch> launches;
-
+//start test
     @BeforeEach
     public void setUp() {
         dao = mock(Neo4jDAO.class);
