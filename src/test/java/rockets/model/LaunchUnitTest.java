@@ -54,7 +54,6 @@ public class LaunchUnitTest {
         payload.add("2t");
         newLaunch.setPayload(payload);
         assertEquals(payload, newLaunch.getPayload());
-
     }
 
     @Test
